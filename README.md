@@ -9,16 +9,23 @@
 - ⚖️ **PG/VG比例** - 自定义PG/VG比例，支持MaxVG模式
 - 🌸 **香精配比** - 多种香精组合，支持不同PG/VG比例香精
 - 💾 **配方保存** - 本地保存常用配方，方便重复使用
+- 🔄 **配方同步** - 支持配方导出/导入、分享链接、跨设备同步
 - 📱 **移动优化** - 响应式设计，完美适配手机和平板
 - 🔄 **PWA支持** - 可安装到桌面，支持离线使用
 
 ## 🚀 在线使用
 
-访问在线版本：[https://zh2100.github.io/vape-calculator](https://zh2100.github.io/vape-calculator)
+访问在线版本：[https://zh2100.github.io/vape-calculator/](https://zh2100.github.io/vape-calculator/)
 
 ### PWA安装
 - **Android**: 在Chrome中访问网站，点击"添加到主屏幕"
 - **iOS**: 在Safari中访问网站，点击分享按钮 → "添加到主屏幕"
+- **桌面**: 在支持的浏览器中会显示安装提示
+
+### 配方同步功能
+- **导出配方**: 将配方导出为JSON格式，可在不同设备间传输
+- **分享链接**: 生成包含配方的分享链接，一键分享给其他用户
+- **跨设备同步**: 通过导出/导入实现多设备配方同步
 
 ## 🛠️ 本地开发
 
@@ -29,14 +36,14 @@
 ### 快速启动
 ```bash
 # 克隆项目
-git clone https://github.com/你的用户名/vape-calculator.git
+git clone https://github.com/zh2100/vape-calculator.git
 cd vape-calculator
 
 # 安装依赖
 flutter pub get
 
 # 启动开发服务器
-flutter run -d chrome
+flutter run -d chrome --web-port 3000
 ```
 
 ### 批处理脚本（Windows）
@@ -46,24 +53,27 @@ flutter run -d chrome
 - `快速启动.bat` - 快速启动，适合日常开发
 - `清理重启.bat` - 清理缓存后重新启动
 - `构建静态文件.bat` - 构建生产版本
+- `GitHub Pages构建.bat` - 专门用于GitHub Pages部署的构建脚本
 
 ## 📦 构建部署
 
 ### Web版本构建
 ```bash
-# 构建Web版本
-flutter build web
+# 构建Web版本（本地测试）
+flutter build web --no-tree-shake-icons
 
-# 构建相对路径版本（用于GitHub Pages）
-flutter build web
-# 然后修改 build/web/index.html 中的 base href 为 "./"
+# 构建GitHub Pages版本
+flutter build web --base-href "/vape-calculator/" --no-tree-shake-icons
+
+# 或使用批处理脚本（Windows）
+GitHub Pages构建.bat
 ```
 
 ### GitHub Pages部署
-1. 运行构建脚本生成静态文件
+1. 运行 `GitHub Pages构建.bat` 或手动构建命令
 2. 将 `build/web` 文件夹内容上传到GitHub仓库
 3. 在仓库设置中启用GitHub Pages
-4. 访问 `https://你的用户名.github.io/仓库名`
+4. 访问 `https://zh2100.github.io/vape-calculator/`
 
 详细部署指南请参考：[手动GitHub部署指南.md](手动GitHub部署指南.md)
 
@@ -84,6 +94,52 @@ flutter build ios
 ```
 
 详细移动端部署指南：[手机使用完整指南.md](手机使用完整指南.md)
+
+## 🔄 配方同步功能
+
+### 功能特点
+- **跨设备同步** - 在不同设备间传输配方数据
+- **分享功能** - 生成链接分享配方给其他用户
+- **数据安全** - 本地存储，保护隐私
+- **格式兼容** - 标准JSON格式，易于备份和迁移
+
+### 使用方法
+
+#### 导出配方
+1. 点击右上角的云端同步图标 🔄
+2. 选择"导出配方"
+3. 复制生成的JSON数据
+4. 保存为 `.json` 文件或直接传输
+
+#### 分享配方
+1. 在同步界面选择"生成分享链接"
+2. 复制生成的URL链接
+3. 发送给其他用户
+4. 其他用户访问链接即可自动导入配方
+
+#### 跨设备同步
+1. **设备A**: 导出配方 → 获取JSON数据
+2. **传输**: 通过邮件、云盘等方式传输JSON文件
+3. **设备B**: 导入配方 → 粘贴JSON数据
+
+### 数据格式
+```json
+{
+  "version": "1.0",
+  "exportDate": "2024-01-01T00:00:00.000Z",
+  "recipes": [
+    {
+      "id": "recipe_id",
+      "name": "配方名称",
+      "volume": 100.0,
+      "nicotineStrength": 6.0,
+      "pgRatio": 30.0,
+      "vgRatio": 70.0,
+      "flavors": [...]
+    }
+  ]
+}
+```
 
 ## 🧪 测试
 
@@ -114,6 +170,12 @@ flutter test --coverage
 3. **生成配方** - 点击计算按钮获得详细配方
 4. **保存配方** - 将常用配方保存到本地
 
+### 配方同步操作
+1. **导出配方** - 点击右上角同步图标 → 导出配方 → 复制JSON数据
+2. **导入配方** - 在新设备上粘贴JSON数据进行导入
+3. **分享配方** - 生成分享链接 → 复制链接 → 发送给其他用户
+4. **跨设备同步** - 通过导出/导入实现多设备间配方同步
+
 ### 计算示例
 **目标配方**: 100ml, 6mg尼古丁, 30%PG/70%VG, 草莓5% + 香草3%
 
@@ -131,8 +193,30 @@ flutter test --coverage
 - **页面空白**: 检查base href路径设置
 - **数据丢失**: 检查浏览器存储设置，避免使用隐私模式
 - **PWA无法安装**: 确保使用HTTPS访问
+- **移动端加载慢**: 首次加载可能较慢，请耐心等待或刷新页面
+- **配方同步失败**: 检查网络连接，确保JSON格式正确
+- **分享链接无效**: 确保链接完整，包含所有参数
 
 详细故障排除：[使用说明.md](使用说明.md)
+
+## 📋 版本更新
+
+### v1.1.0 (最新)
+- ✅ 新增配方同步功能
+- ✅ 支持配方导出/导入
+- ✅ 支持分享链接生成
+- ✅ 优化移动端加载性能
+- ✅ 修复PWA安装问题
+- ✅ 改进用户界面体验
+
+### v1.0.0
+- ✅ 基础配方计算功能
+- ✅ 尼古丁浓度计算
+- ✅ PG/VG比例调配
+- ✅ 香精配比计算
+- ✅ 本地配方保存
+- ✅ PWA支持
+- ✅ 移动端适配
 
 ## 🤝 贡献
 
@@ -161,8 +245,9 @@ flutter test --coverage
 
 ## 📞 联系方式
 
-- 项目地址: [GitHub](https://github.com/你的用户名/vape-calculator)
-- 问题反馈: [Issues](https://github.com/你的用户名/vape-calculator/issues)
+- 项目地址: [GitHub](https://github.com/zh2100/vape-calculator)
+- 问题反馈: [Issues](https://github.com/zh2100/vape-calculator/issues)
+- 在线体验: [https://zh2100.github.io/vape-calculator/](https://zh2100.github.io/vape-calculator/)
 
 ---
 
