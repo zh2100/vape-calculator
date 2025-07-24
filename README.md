@@ -14,7 +14,7 @@
 
 ## 🚀 在线使用
 
-访问在线版本：[https://zh2100.github.io/vape-calculator](https://你的用户名.github.io/vape-calculator)
+访问在线版本：[https://zh2100.github.io/vape-calculator](https://zh2100.github.io/vape-calculator)
 
 ### PWA安装
 - **Android**: 在Chrome中访问网站，点击"添加到主屏幕"
