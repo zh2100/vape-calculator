@@ -92,91 +92,25 @@
     }
   </style>
 
-  <!-- 移动端性能优化 -->
-  <script>
-    // 移动端检测
-    function isMobile() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
-
-    // 移动端优化
-    if (isMobile()) {
-      // 禁用某些动画以提高性能
-      document.documentElement.style.setProperty('--animation-duration', '0s');
-
-      // 添加移动端标识
-      document.body.classList.add('mobile');
-
-      // 预加载关键资源
-      const preloadLinks = [
-        'main.dart.js',
-        'flutter.js'
-      ];
-
-      preloadLinks.forEach(function(href) {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'script';
-        link.href = href;
-        document.head.appendChild(link);
-      });
-    }
-  </script>
-
   <script src="flutter_bootstrap.js" async></script>
 
   <!-- Service Worker注册 -->
   <script>
-    // 移动端兼容性检查
-    function isMobile() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
-
-    // 移动端加载超时处理
-    let loadingTimeout;
-    if (isMobile()) {
-      loadingTimeout = setTimeout(function() {
-        const loading = document.getElementById('loading');
-        if (loading && loading.style.display !== 'none') {
-          loading.innerHTML = `
-            <div style="text-align: center; padding: 20px;">
-              <h2 style="margin: 0; font-weight: 300; color: #FF8C42;">加载超时</h2>
-              <p style="margin: 15px 0; opacity: 0.8;">移动端首次加载可能较慢</p>
-              <button onclick="location.reload()" style="
-                background: #FF8C42;
-                color: white;
-                border: none;
-                padding: 12px 24px;
-                border-radius: 6px;
-                font-size: 16px;
-                cursor: pointer;
-              ">重新加载</button>
-            </div>
-          `;
-        }
-      }, 15000); // 15秒超时
-    }
-
-    // 注册Service Worker（修复路径）
+    // 注册Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/vape-calculator/sw.js')
+        navigator.serviceWorker.register('/sw.js')
           .then(function(registration) {
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
           })
           .catch(function(err) {
             console.log('ServiceWorker registration failed: ', err);
-            // 如果Service Worker注册失败，尝试不使用Service Worker
-            console.log('Continuing without Service Worker');
           });
       });
     }
 
     // 隐藏加载提示
     window.addEventListener('flutter-first-frame', function() {
-      if (loadingTimeout) {
-        clearTimeout(loadingTimeout);
-      }
       const loading = document.getElementById('loading');
       if (loading) {
         loading.style.display = 'none';

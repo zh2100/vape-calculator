@@ -1,15 +1,15 @@
 // Service Worker for Vape Calculator PWA
 const CACHE_NAME = 'vape-calculator-v1';
 const urlsToCache = [
-  '/vape-calculator/',
-  '/vape-calculator/index.html',
-  '/vape-calculator/main.dart.js',
-  '/vape-calculator/flutter.js',
-  '/vape-calculator/manifest.json',
-  '/vape-calculator/mobile.css',
-  '/vape-calculator/icons/Icon-192.png',
-  '/vape-calculator/icons/Icon-512.png',
-  '/vape-calculator/favicon.png'
+  '/',
+  '/index.html',
+  '/main.dart.js',
+  '/flutter.js',
+  '/manifest.json',
+  '/mobile.css',
+  '/icons/Icon-192.png',
+  '/icons/Icon-512.png',
+  '/favicon.png'
 ];
 
 // 安装Service Worker
