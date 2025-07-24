@@ -1,7 +1,7 @@
 {
-    "name": "电子烟油配方计算器",
-    "short_name": "烟油计算器",
-    "start_url": "/",
+    "name": "电子烟油配方计算",
+    "short_name": "烟油计算",
+    "start_url": "/vape-calculator/",
     "display": "standalone",
     "background_color": "#1A1A1A",
     "theme_color": "#FF8C42",
